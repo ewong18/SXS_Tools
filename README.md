@@ -12,11 +12,14 @@ THIS IS REALLY ROUGH CODE. USE AT YOUR OWN RISK.
 
 
 # Workflow
+- Trigger the shortcut
 - The shortcut will ask for input variables:
   - Current level
   - Current XP (see this on the bottom of your character tab)
   - Taget level
   - EXP Rate Per Hour (see EXP/hr on your Bed)
+  
+  *Note you can go back to the game app and move around if you need to reference the numbers from the game
 - The shortcut passes the variables to an `a-shell` action to execute the python script
 - Menu will show the datetime when you will reach the level
 - A reminder will be created in  your reminders app with an alert with the time
@@ -31,7 +34,7 @@ THIS IS REALLY ROUGH CODE. USE AT YOUR OWN RISK.
     - e.g. `mkdir Projects`
 1. Navigate to that folder
     - e.g. `cd Projects`
-1. Clone this repo
+1. Clone this repo (`lg2` is the built-in git manager in a-shell)
     - `lg2 clone https://github.com/ewong18/SXS_Tools`
 1. Navigate to the repo
     - e.g. `cd SXS_Tools`
@@ -41,7 +44,9 @@ THIS IS REALLY ROUGH CODE. USE AT YOUR OWN RISK.
 ## iOS Shortcut Creation
 - Here is the share link to a template of the shortcut
 https://www.icloud.com/shortcuts/01c25217381a4b259a723d53315b714b
-- If you created your folder path differently from the example, you will need to change the path of the referenced python file in the a-shell Execute step
+- If you created your folder path differently from the example, you will need to change the path of the referenced python file to the path created in step 1 above. in the a-shell Execute step.
 - The first time running it, you will get a Privacy warning. 
 
-- [Instructions to create the shortcut from scratch TBD]
+- [Instructions to create the shortcut from scratch TBA]
+
+![Alt Text](exp_calculator/resources/shortcut_screenshot.png)
