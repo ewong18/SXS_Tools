@@ -4,6 +4,8 @@ This is an iOS shortcut to creat an iOS reminder when you've leveled up to your 
 
 THIS IS REALLY ROUGH CODE. USE AT YOUR OWN RISK.
 
+Credits to lootandwaifus.com for the EXP table.
+
 # Pre-requisites
 - [`a-shell`](https://apps.apple.com/us/app/a-shell/id1473805438) app must be installed
   - `a-shell` is a local Unix terminal. We will store the Python assets there, and the shortcut will run the script
