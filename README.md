@@ -6,6 +6,8 @@ THIS IS REALLY ROUGH CODE. USE AT YOUR OWN RISK.
 
 Credits to lootandwaifus.com for the EXP table.
 
+NOTE: It also appears green season-only EXP doesn't really follow this chart. 
+
 # Pre-requisites
 - [`a-shell`](https://apps.apple.com/us/app/a-shell/id1473805438) app must be installed
   - `a-shell` is a local Unix terminal. We will store the Python assets there, and the shortcut will run the script
@@ -18,7 +20,7 @@ Credits to lootandwaifus.com for the EXP table.
 - The shortcut will ask for input variables:
   - Current level
   - Current XP (see this on the bottom of your character tab)
-  - Taget level
+  - Target level
   - EXP Rate Per Hour (see EXP/hr on your Bed)
   
   *Note you can go back to the game app and move around if you need to reference the numbers from the game
