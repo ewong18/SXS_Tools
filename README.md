@@ -32,10 +32,16 @@ THIS IS REALLY ROUGH CODE. USE AT YOUR OWN RISK.
 1. Navigate to that folder
     - e.g. `cd Projects`
 1. Clone this repo
-    - `lg2 clone https://github.com/ewong18/swordxshieldtools`
+    - `lg2 clone https://github.com/ewong18/SXS_Tools`
+1. Navigate to the repo
+    - e.g. `cd SXS_Tools`
 1. Test the script is working correctly 
-    - e.g. `python3 swordxsheildtools/exp_calculator/calc_xp.py 104 2350000 106 254657`
+    - e.g. `python3 exp_calculator/src/calc_xp.py 104 2350000 106 254657`
 
 ## iOS Shortcut Creation
-- Here is the share link of the shortcut, but
-https://www.icloud.com/shortcuts/159118ddfefc41408915a9dd134bf368
+- Here is the share link to a template of the shortcut
+https://www.icloud.com/shortcuts/01c25217381a4b259a723d53315b714b
+- If you created your folder path differently from the example, you will need to change the path of the referenced python file in the a-shell Execute step
+- The first time running it, you will get a Privacy warning. 
+
+- [Instructions to create the shortcut from scratch TBD]
