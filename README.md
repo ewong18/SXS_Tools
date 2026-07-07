@@ -1,4 +1,4 @@
-# Sword x Shield EXP Reminder Creator iOS Shortcut
+# Sword x Staff EXP Reminder Creator iOS Shortcut
 
 This is an iOS shortcut to creat an iOS reminder when you've leveled up to your target level. It also includes the daily free 2-hour speed up.
 
