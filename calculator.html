@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>XP ETA Calculator</title>
+  <link rel="stylesheet" href="style.css">
+ </head>
+<body>
+  <main>
+    <h1>XP ETA Calculator</h1>
+    <h3>Calculate when you'll reach your target level</h3>
+    <p class="note">Note: This calculator is only accurate for base level-ups (not season levels).</p>
+    <form id="calc-form">
+      <label>Current level: <input type="number" id="current_level" value="1" min="1" required></label>
+      <label>Current exp: <input type="number" id="current_exp" value="0" min="0" required></label>
+      <label>Target level: <input type="number" id="target_level" value="2" min="2" required></label>
+      <label>XP per hour: <input type="number" id="xp_per_hr" value="100" step="any" min="0.1" required></label>
+      <label>Output timezone: <select id="output_tz"></select></label>
+      <div class="actions">
+        <button type="submit">Calculate ETA</button>
+      </div>
+    </form>
+
+    <section id="result" aria-live="polite"></section>
+  </main>
+  <script src="timezones.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
