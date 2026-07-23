@@ -9,6 +9,8 @@
 <body>
   <main>
     <h1>XP ETA Calculator</h1>
+    <h3>Calculate when you'll reach your target level</h3>
+    <p class="note">Note: This calculator is only accurate for base level-ups (not season levels).</p>
     <form id="calc-form">
       <label>Current level: <input type="number" id="current_level" value="1" min="1" required></label>
       <label>Current exp: <input type="number" id="current_exp" value="0" min="0" required></label>
@@ -21,7 +23,6 @@
     </form>
 
     <section id="result" aria-live="polite"></section>
-    <p class="note">This is a static client-side implementation — no server required.</p>
   </main>
   <script src="timezones.js"></script>
   <script src="app.js"></script>
