@@ -1,6 +1,6 @@
 async function loadExpEntries() {
   const remoteUrl = 'https://qenu.github.io/ethna-timeline/assets/data/exp_required.json';
-  const fallbackUrl = 'season_exp.json';
+  const fallbackUrl = 'https://ewong18.github.io/SXS_Tools/season_exp.json';
 
   try {
     const response = await fetch(remoteUrl);
