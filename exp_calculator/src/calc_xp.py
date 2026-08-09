@@ -47,7 +47,6 @@ class ExpCalc:
             if  (line['level'] > self.current_lvl
                 and line['level'] <= self.target_lvl
                 and line['season']==self.season):
-                print(line)
                 required_exp += line['exp']
         return required_exp
     
