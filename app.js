@@ -1,15 +1,44 @@
-async function loadXpTable() {
-  const res = await fetch('required_xp.csv');
-  const txt = await res.text();
-  const lines = txt.trim().split('\n').slice(1);
-  const xp = {};
-  for (const line of lines) {
-    const cols = line.split(',');
-    const lvl = parseInt(cols[0], 10);
-    const xpReq = parseInt(cols[1], 10);
-    xp[lvl] = xpReq;
+async function loadExpEntries() {
+  const remoteUrl = 'https://qenu.github.io/ethna-timeline/assets/data/exp_required.json';
+  const fallbackUrl = 'https://ewong18.github.io/SXS_Tools/season_exp.json';
+
+  try {
+    const response = await fetch(remoteUrl);
+    if (!response.ok) {
+      throw new Error(`Remote XP data unavailable (${response.status})`);
+    }
+
+    const data = await response.json();
+    if (!Array.isArray(data)) {
+      throw new Error('Unexpected XP data format from remote source');
+    }
+    return data;
+  } catch (error) {
+    const fallbackResponse = await fetch(fallbackUrl);
+    if (!fallbackResponse.ok) {
+      throw new Error('Unable to load XP data from remote or local sources');
+    }
+
+    const data = await fallbackResponse.json();
+    if (!Array.isArray(data)) {
+      throw new Error('Unexpected XP data format from local source');
+    }
+    return data;
   }
-  return xp;
+}
+
+function calcRequiredExp(expEntries, currentLvl, targetLvl, season) {
+  let requiredExp = 0;
+  for (const entry of expEntries) {
+    const level = Number(entry.level);
+    const exp = Number(entry.exp);
+    const entrySeason = Number(entry.season);
+
+    if (level > currentLvl && level <= targetLvl && entrySeason === season) {
+      requiredExp += exp;
+    }
+  }
+  return requiredExp;
 }
 
 function countResetsPassed(startMs, deltaMs) {
@@ -29,11 +58,8 @@ function countResetsPassed(startMs, deltaMs) {
   return Math.max(0, daysPassed);
 }
 
-function calcEtaJs(currLvl, currExp, tgtLvl, xpPerHr, currentTsMs, outputTz, xpTable) {
-  let xpRequired = 0;
-  for (let lvl = currLvl + 1; lvl <= tgtLvl; lvl++) {
-    xpRequired += (xpTable[lvl] || 0);
-  }
+function calcEtaJs(currLvl, currExp, tgtLvl, xpPerHr, currentTsMs, outputTz, season, expEntries) {
+  const xpRequired = calcRequiredExp(expEntries, currLvl, tgtLvl, season);
   const remainingXp = xpRequired - currExp;
   if (remainingXp <= 0) return {eta: new Date(currentTsMs), note: 'Already reached target'};
   const timeRequiredHr = remainingXp / xpPerHr;
@@ -48,10 +74,29 @@ function calcEtaJs(currLvl, currExp, tgtLvl, xpPerHr, currentTsMs, outputTz, xpT
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const xpTable = await loadXpTable();
   const form = document.getElementById('calc-form');
   const result = document.getElementById('result');
   const tzSelect = document.getElementById('output_tz');
+  const seasonSelect = document.getElementById('season');
+
+  let expEntries = [];
+  try {
+    expEntries = await loadExpEntries();
+  } catch (error) {
+    result.innerHTML = `<strong>${error.message}</strong>`;
+    return;
+  }
+
+  if (seasonSelect) {
+    const seasons = Array.from(new Set(expEntries.map((entry) => Number(entry.season)).filter(Boolean))).sort((a, b) => a - b);
+    for (const season of seasons) {
+      const opt = document.createElement('option');
+      opt.value = season;
+      opt.textContent = `Season ${season}`;
+      seasonSelect.appendChild(opt);
+    }
+    seasonSelect.value = seasons[0] ? String(seasons[0]) : '1';
+  }
 
   // populate timezone select from TIMEZONES provided by timezones.js
   if (window.TIMEZONES && tzSelect) {
@@ -71,11 +116,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tgtLvl = parseInt(document.getElementById('target_level').value, 10);
     const xpPerHr = parseFloat(document.getElementById('xp_per_hr').value);
     const outputTz = document.getElementById('output_tz').value || 'America/New_York';
+    const season = parseInt(seasonSelect?.value || '1', 10);
 
     // Always use the current instant in UTC
     const nowMs = Date.now();
 
-    const out = calcEtaJs(currLvl, currExp, tgtLvl, xpPerHr, nowMs, outputTz, xpTable);
+    const out = calcEtaJs(currLvl, currExp, tgtLvl, xpPerHr, nowMs, outputTz, season, expEntries);
     if (out.note) {
       result.innerHTML = `<strong>${out.note}</strong>`;
     } else {
