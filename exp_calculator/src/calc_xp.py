@@ -44,9 +44,10 @@ class ExpCalc:
     def calc_required_exp(self) -> int:        
         required_exp = 0
         for line in self._exp_table:
-            if  (line['level'] >= self.current_lvl
+            if  (line['level'] > self.current_lvl
                 and line['level'] <= self.target_lvl
                 and line['season']==self.season):
+                print(line)
                 required_exp += line['exp']
         return required_exp
     
