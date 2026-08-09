@@ -1,12 +1,12 @@
 # Sword x Staff EXP Reminder Creator iOS Shortcut
+(There is also a rough webpage at https://ewong18.github.io/SXS_Tools/. This has been created using GitHub Copilot, based on my python script.)
 
 This is an iOS shortcut to creat an iOS reminder when you've leveled up to your target level. It also includes the daily free 2-hour speed up.
 
 THIS IS REALLY ROUGH CODE. USE AT YOUR OWN RISK.
 
-Credits to lootandwaifus.com for the EXP table.
+Credits to qenu.github.io for the EXP table.
 
-NOTE: It also appears green season-only EXP doesn't really follow this chart. 
 
 # Pre-requisites
 - [`a-shell`](https://apps.apple.com/us/app/a-shell/id1473805438) app must be installed
@@ -43,7 +43,7 @@ NOTE: It also appears green season-only EXP doesn't really follow this chart.
 1. Navigate to the repo
     - e.g. `cd SXS_Tools`
 1. Test the script is working correctly 
-    - e.g. `python3 exp_calculator/src/calc_xp.py 104 2350000 106 254657`
+    - e.g. `python3 exp_calculator/src/main.py 104 2350000 106 254657 2`
 
 ## iOS Shortcut Creation
 - Here is the share link to a template of the shortcut
