@@ -44,8 +44,8 @@ class ExpCalc:
     def calc_required_exp(self) -> int:        
         required_exp = 0
         for line in self._exp_table:
-            if  (line['level'] > self.current_lvl
-                and line['level'] <= self.target_lvl
+            if  (line['level'] >= self.current_lvl
+                and line['level'] < self.target_lvl
                 and line['season']==self.season):
                 required_exp += line['exp']
         return required_exp
@@ -62,21 +62,42 @@ class ExpCalc:
         
         return days_passed
 
-    def calc_eta(self) -> datetime:
+    def get_next_reset_time(self, current_ts: datetime) -> datetime:
+        current_utc = current_ts.astimezone(timezone.utc)
+        next_reset = current_utc.replace(
+            hour=self.RESET_TIME,
+            minute=0,
+            second=0,
+            microsecond=0,
+        )
+
+        if next_reset <= current_utc:
+            next_reset += timedelta(days=1)
+
+        return next_reset
+
+    def calc_eta(self, current_ts: datetime | None = None) -> datetime:
         XP_required = self.calc_required_exp()
         remaining_XP_required = XP_required - self.current_exp
-    
+
         # include daily 2hr speedup
-        current_ts = datetime.now(timezone.utc)
-        time_required_hr = remaining_XP_required/self.XP_per_hr
-        free_resets = self.count_resets_passed(current_ts,                  
-                                               time_required_hr*3600)
+        if current_ts is None:
+            current_ts = datetime.now(timezone.utc)
+        current_ts = current_ts.astimezone(timezone.utc)
+        time_required_hr = remaining_XP_required / self.XP_per_hr
+        free_resets = self.count_resets_passed(current_ts, time_required_hr * 3600)
+        eta_without_free_reset = current_ts + timedelta(hours=time_required_hr)
         if free_resets > 0:
-            #print(f"Will cross {free_resets} reset days.")
             remaining_time = time_required_hr - (2 * free_resets)
         else:
             remaining_time = time_required_hr
-            
-        eta = current_ts + timedelta(seconds=remaining_time*3600)
+
+        eta = current_ts + timedelta(seconds=remaining_time * 3600)
+        next_reset = self.get_next_reset_time(current_ts)
+
+        time_until_reset_after_eta = next_reset - eta_without_free_reset
+        if timedelta(0) <= time_until_reset_after_eta < timedelta(hours=2):
+            eta = next_reset
+
         eta_converted = eta.astimezone(pytz.timezone(self.timezone))
-        return(eta_converted)
+        return eta_converted
