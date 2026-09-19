@@ -34,7 +34,7 @@ function calcRequiredExp(expEntries, currentLvl, targetLvl, season) {
     const exp = Number(entry.exp);
     const entrySeason = Number(entry.season);
 
-    if (level > currentLvl && level <= targetLvl && entrySeason === season) {
+    if (level >= currentLvl && level < targetLvl && entrySeason === season) {
       requiredExp += exp;
     }
   }
@@ -55,19 +55,42 @@ function countResetsPassed(startMs, deltaMs) {
   const startDateMs = dateUtcMs(startShifted);
   const endDateMs = dateUtcMs(endShifted);
   const daysPassed = Math.floor((endDateMs - startDateMs) / (24 * 3600 * 1000));
-  return Math.max(0, daysPassed);
+  return daysPassed;
+}
+
+function getNextResetTimeMs(currentTsMs) {
+  const current = new Date(currentTsMs);
+  let nextResetMs = Date.UTC(
+    current.getUTCFullYear(),
+    current.getUTCMonth(),
+    current.getUTCDate(),
+    13,
+  );
+
+  if (nextResetMs <= currentTsMs) {
+    nextResetMs += 24 * 3600 * 1000;
+  }
+
+  return nextResetMs;
 }
 
 function calcEtaJs(currLvl, currExp, tgtLvl, xpPerHr, currentTsMs, outputTz, season, expEntries) {
   const xpRequired = calcRequiredExp(expEntries, currLvl, tgtLvl, season);
   const remainingXp = xpRequired - currExp;
-  if (remainingXp <= 0) return {eta: new Date(currentTsMs), note: 'Already reached target'};
   const timeRequiredHr = remainingXp / xpPerHr;
 
   const freeResets = countResetsPassed(currentTsMs, timeRequiredHr * 3600 * 1000);
-  const remainingTimeHr = Math.max(0, timeRequiredHr - (2 * freeResets));
+  const remainingTimeHr = timeRequiredHr - (2 * freeResets);
 
-  const etaMs = currentTsMs + remainingTimeHr * 3600 * 1000;
+  let etaMs = currentTsMs + remainingTimeHr * 3600 * 1000;
+  const nextResetMs = getNextResetTimeMs(currentTsMs);
+  const etaWithoutFreeResetMs = currentTsMs + timeRequiredHr * 3600 * 1000;
+  const timeUntilResetAfterEtaMs = nextResetMs - etaWithoutFreeResetMs;
+
+  if (timeUntilResetAfterEtaMs >= 0 && timeUntilResetAfterEtaMs < 2 * 3600 * 1000) {
+    etaMs = nextResetMs;
+  }
+
   const etaDate = new Date(etaMs);
   const formatter = new Intl.DateTimeFormat(undefined, {dateStyle:'medium', timeStyle:'short', timeZone: outputTz || 'America/New_York'});
   return {eta: etaDate, formatted: formatter.format(etaDate), freeResets};
