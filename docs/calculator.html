@@ -4,26 +4,60 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>XP ETA Calculator</title>
-  <link rel="stylesheet" href="style.css">
- </head>
+  <link rel="stylesheet" href="shard-planner.css">
+</head>
 <body>
-  <main>
-    <h1>XP ETA Calculator</h1>
-    <h3>Calculate when you'll reach your target level</h3>
-    <p class="note">Note: This calculator assumes that you claim the daily 2hr speedup.</p>
-    <form id="calc-form">
-      <label>Current level: <input type="number" id="current_level" value="1" min="1" required></label>
-      <label>Current exp: <input type="number" id="current_exp" value="0" min="0" required></label>
-      <label>Target level: <input type="number" id="target_level" value="2" min="2" required></label>
-      <label>XP per hour: <input type="number" id="xp_per_hr" value="100" step="any" min="0.1" required></label>
-      <label>Season: <select id="season"></select></label>
-      <label>Output timezone: <select id="output_tz"></select></label>
-      <div class="actions">
-        <button type="submit">Calculate ETA</button>
-      </div>
-    </form>
+  <main class="planner">
+    <header class="topbar">
+      <a class="back-link" href="index.html">Sword x Staff Tools</a>
+      <span class="eyebrow">PROGRESSION / EXPERIENCE</span>
+    </header>
 
-    <section id="result" aria-live="polite"></section>
+    <section class="intro">
+      <div>
+        <p class="kicker">XP TIMELINE</p>
+        <h1>XP ETA calculator</h1>
+      </div>
+      <p class="intro-note">Estimate when you'll reach your target level.</p>
+    </section>
+
+    <section class="workspace" aria-label="Experience calculation inputs and result">
+      <form id="calc-form" class="inputs">
+        <div class="section-heading">
+          <span class="section-index">01</span>
+          <h2>Plan inputs</h2>
+        </div>
+
+        <label for="current_level">Current level</label>
+        <input type="number" id="current_level" value="1" min="1" required>
+
+        <label for="current_exp">Current experience</label>
+        <input type="number" id="current_exp" value="0" min="0" required>
+
+        <label for="target_level">Target level</label>
+        <input type="number" id="target_level" value="2" min="2" required>
+
+        <label for="xp_per_hr">Experience per hour</label>
+        <input type="number" id="xp_per_hr" value="100" step="any" min="0.1" required>
+
+        <label for="season">Season</label>
+        <select id="season"></select>
+
+        <label for="output_tz">Output timezone</label>
+        <select id="output_tz"></select>
+
+        <button type="submit">Calculate ETA <span aria-hidden="true">↗</span></button>
+      </form>
+
+      <section class="projection calculator-projection">
+        <div class="section-heading projection-heading">
+          <span class="section-index">02</span>
+          <h2>Estimated arrival</h2>
+        </div>
+        <p class="footnote calculator-note">This estimate assumes you claim the daily two-hour speedup.</p>
+        <section id="result" aria-live="polite"></section>
+      </section>
+    </section>
   </main>
   <script src="timezones.js"></script>
   <script src="app.js"></script>

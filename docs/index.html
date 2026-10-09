@@ -3,17 +3,52 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sword x Staff Tool</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Sword x Staff Tools</title>
+  <link rel="stylesheet" href="shard-planner.css">
 </head>
 <body>
-  <main>
-    <h1>Sword x Staff Tools</h1>
-    <p>Collection of small tools for Sword x Staff.</p>
-    <ul>
-      <li><a href="calculator.html">XP ETA Calculator</a></li>
-      <li><a href="shard-planner.html">Gear Shard Planner</a></li>
-    </ul>
+  <main class="planner tools-home">
+    <header class="topbar">
+      <span class="back-link">Sword x Staff Tools</span>
+      <span class="eyebrow">FIELD TOOLS / 02</span>
+    </header>
+
+    <section class="intro">
+      <div>
+        <p class="kicker">PLAYER TOOLKIT</p>
+        <h1>Sword x Staff tools</h1>
+      </div>
+      <p class="intro-note">Quick calculators for progression and gear planning.</p>
+    </section>
+
+    <section class="tool-directory" aria-labelledby="tool-directory-title">
+      <div class="section-heading tool-directory-heading">
+        <span class="section-index">OPEN</span>
+        <h2 id="tool-directory-title">Choose a tool</h2>
+      </div>
+      <nav class="tool-list" aria-label="Available tools">
+        <a class="tool-entry" href="calculator.html">
+          <span class="tool-number">01</span>
+          <span class="tool-copy">
+            <span class="tool-category">PROGRESSION / EXPERIENCE</span>
+            <span class="tool-name">XP ETA calculator</span>
+            <span class="tool-description">Estimate when you'll reach your target level.</span>
+          </span>
+          <span class="tool-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="tool-entry" href="shard-planner.html">
+          <span class="tool-number">02</span>
+          <span class="tool-copy">
+            <span class="tool-category">MATERIALS / GEAR</span>
+            <span class="tool-name">Gear shard planner</span>
+            <span class="tool-description">Plan your shard reserve, sales, and craft timing.</span>
+          </span>
+          <span class="tool-arrow" aria-hidden="true">↗</span>
+        </a>
+      </nav>
+    </section>
+
+    <footer class="footnote">Sword x Staff planning tools</footer>
   </main>
 </body>
 </html>
