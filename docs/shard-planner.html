@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gear Shard Planner</title>
+  <link rel="stylesheet" href="shard-planner.css">
+</head>
+<body>
+  <main class="planner">
+    <header class="topbar">
+      <a class="back-link" href="index.html">Sword x Staff Tools</a>
+      <span class="eyebrow">RESOURCE PLANNER / GEAR</span>
+    </header>
+
+    <section class="intro">
+      <div>
+        <p class="kicker">DUNGEON SHARDS</p>
+        <h1>Gear shard planner</h1>
+      </div>
+      <p class="intro-note">Plan the stash needed to craft your gear target.</p>
+    </section>
+
+    <section class="workspace" aria-label="Shard planning inputs and projection">
+      <form id="planner-form" class="inputs">
+        <div class="section-heading">
+          <span class="section-index">01</span>
+          <h2>Plan inputs</h2>
+        </div>
+
+        <label for="next-dungeon">Time until next dungeon</label>
+        <input id="next-dungeon" name="nextDungeon" type="text" value="01:00:00"
+          inputmode="numeric" pattern="\d{1,3}:([01]\d|2[0-3]):[0-5]\d"
+          aria-describedby="countdown-help" required>
+        <span id="countdown-help" class="field-hint">DD:HH:mm</span>
+
+        <label for="shards-per-run">Shards earned per run</label>
+        <input id="shards-per-run" name="shardsPerRun" type="number" min="1" step="1" value="10" required>
+
+        <label for="gear-count">Gear pieces to craft</label>
+        <input id="gear-count" name="gearCount" type="number" min="1" step="1" value="4" required>
+
+        <label for="shards-on-hand">Shards currently on hand</label>
+        <input id="shards-on-hand" name="shardsOnHand" type="number" min="0" step="1" value="0" required>
+
+        <button type="submit">Update plan <span aria-hidden="true">↗</span></button>
+        <p id="form-error" class="form-error" role="alert"></p>
+      </form>
+
+      <section class="projection" aria-live="polite">
+        <div class="section-heading projection-heading">
+          <span class="section-index">02</span>
+          <h2>Stash projection</h2>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-item summary-primary">
+            <span>Crafting target</span>
+            <strong id="target-total">400</strong>
+            <small>shards needed</small>
+          </div>
+          <div class="summary-item">
+            <span>Four-run daily yield</span>
+            <strong id="daily-total">40</strong>
+            <small>shards / day</small>
+          </div>
+          <div class="summary-item">
+            <span>Current stash</span>
+            <strong id="current-total">0</strong>
+            <small>shards on hand</small>
+          </div>
+        </div>
+
+        <div class="progress-block">
+          <div class="progress-copy">
+            <span id="progress-label">0% funded</span>
+            <span id="remaining-label">400 to go</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Crafting target funded"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="calendar-toolbar">
+          <button id="previous-month" class="month-button" type="button" aria-label="Previous month">‹</button>
+          <h3 id="month-title"></h3>
+          <button id="next-month" class="month-button" type="button" aria-label="Next month">›</button>
+        </div>
+        <div class="calendar" id="calendar" aria-label="End-of-day shard projection calendar"></div>
+        <div class="legend">
+          <span><i class="legend-dot legend-today"></i>Today</span>
+          <span><i class="legend-dot legend-craft"></i>Crafted a piece</span>
+          <span><i class="legend-dot legend-deadline"></i>Latest craft date</span>
+          <span><i class="legend-dot legend-dungeon"></i>Dungeon start date</span>
+        </div>
+      </section>
+    </section>
+
+    <footer class="footnote">
+      Today's shards are already counted in your starting stash. The planner recommends crafting affordable pieces early, keeping the minimum reserve needed to finish by two days before the dungeon, and selling excess only in increments of 10. The projection ends on the dungeon start date.
+    </footer>
+  </main>
+  <script src="shard-planner.js"></script>
+</body>
+</html>
