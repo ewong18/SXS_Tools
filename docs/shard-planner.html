@@ -28,11 +28,14 @@
           <h2>Plan inputs</h2>
         </div>
 
-        <label for="next-dungeon">Time until next dungeon</label>
-        <input id="next-dungeon" name="nextDungeon" type="text" value="01:00:00"
-          inputmode="numeric" pattern="\d{1,3}:([01]\d|2[0-3]):[0-5]\d"
-          aria-describedby="countdown-help" required>
-        <span id="countdown-help" class="field-hint">DD:HH:mm</span>
+        <span class="input-heading" id="next-dungeon-label">Time until next dungeon</span>
+        <div class="countdown-inputs" role="group" aria-labelledby="next-dungeon-label">
+          <label for="next-dungeon-days">DD</label>
+          <label for="next-dungeon-hours">hh</label>
+          <input id="next-dungeon-days" name="nextDungeonDays" type="number" min="0" step="1" value="1" required>
+          <input id="next-dungeon-hours" name="nextDungeonHours" type="number" min="0" max="23" step="1" value="0" required>
+        </div>
+        <span class="field-hint">Enter the days and hours remaining.</span>
 
         <label for="shards-per-run">Shards earned per run</label>
         <input id="shards-per-run" name="shardsPerRun" type="number" min="1" step="1" value="10" required>

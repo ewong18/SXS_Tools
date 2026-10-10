@@ -51,8 +51,12 @@ h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .section-index { color: var(--orange); font-size: 0.7rem; font-weight: 700; }
 h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.45rem; font-weight: 500; }
 .inputs label { margin: 16px 0 7px; font-size: 0.82rem; font-weight: 700; }
+.inputs .input-heading { margin: 16px 0 7px; font-size: 0.82rem; font-weight: 700; }
 .inputs input, .inputs select { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #b8c9bd; border-radius: 3px; background: var(--white); color: var(--ink); font: inherit; font-variant-numeric: tabular-nums; }
 .inputs input:focus-visible, .inputs select:focus-visible, button:focus-visible { outline: 3px solid #e7b947; outline-offset: 2px; }
+.countdown-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 10px; }
+.inputs .countdown-inputs label { margin: 0; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.7rem; font-weight: 500; }
+.inputs .countdown-inputs input { min-width: 0; }
 .field-hint { margin-top: 5px; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.7rem; }
 .inputs button { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; min-height: 46px; padding: 0 15px; border: 0; border-radius: 3px; background: var(--green); color: white; cursor: pointer; font: inherit; font-weight: 700; }
 .inputs button span { font-size: 1.1rem; }

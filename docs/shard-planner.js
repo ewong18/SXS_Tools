@@ -3,13 +3,6 @@ const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTH_FORMATTER = new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' });
 const NUMBER_FORMATTER = new Intl.NumberFormat();
 
-function parseDungeonCountdown(value) {
-  const match = value.trim().match(/^(\d{1,3}):([01]\d|2[0-3]):([0-5]\d)$/);
-  if (!match) return null;
-  const [, days, hours, minutes] = match.map(Number);
-  return ((days * 24 + hours) * 60 + minutes) * 60 * 1000;
-}
-
 function createProjection({ countdownMs, shardsPerRun, gearCount, shardsOnHand }, today = new Date()) {
   const target = gearCount * 100;
   const dailyYield = shardsPerRun * 4;
@@ -212,13 +205,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updatePlan(event) {
     event?.preventDefault();
-    const countdownMs = parseDungeonCountdown(form.elements.nextDungeon.value);
+    const countdownDays = Number(form.elements.nextDungeonDays.value);
+    const countdownHours = Number(form.elements.nextDungeonHours.value);
+    const countdownMs = (countdownDays * 24 + countdownHours) * 60 * 60 * 1000;
     const shardsPerRun = Number(form.elements.shardsPerRun.value);
     const gearCount = Number(form.elements.gearCount.value);
     const shardsOnHand = Number(form.elements.shardsOnHand.value);
 
-    if (countdownMs === null || shardsPerRun <= 0 || gearCount <= 0 || shardsOnHand < 0) {
-      error.textContent = 'Enter a valid DD:HH:mm countdown and non-negative shard amounts.';
+    if (!Number.isInteger(countdownDays) || countdownDays < 0
+      || !Number.isInteger(countdownHours) || countdownHours < 0 || countdownHours > 23
+      || shardsPerRun <= 0 || gearCount <= 0 || shardsOnHand < 0) {
+      error.textContent = 'Enter a non-negative day count, hours from 0 to 23, and valid shard amounts.';
       return;
     }
 
